@@ -1,0 +1,31 @@
+{
+  "name": "login",
+  "version": "1.0.0",
+  "description": "Validação JWT de login",
+  "main": "view/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lukas656/project-login.git"
+  },
+  "author": "Lucas Santos Nascimento",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lukas656/project-login/issues"
+  },
+  "homepage": "https://github.com/Lukas656/project-login#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
