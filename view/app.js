@@ -16,8 +16,7 @@ app.get('/', (req, res) => {
     res.status(200).send({ msg: 'Tudo Certo !!' })
 });
 
-// Registrar Usuário
-
+// Registrar login
 app.post('/newLogin', async (req, res) => {
 
     const { email, password } = req.body
@@ -54,7 +53,47 @@ app.post('/newLogin', async (req, res) => {
         res.status(500).send({ msg: 'Não foi possivel no momento, tente mais tarde' });
         console.log(error);
     }
-})
+});
+// logar
+app.post('/logar', async(req, res)=>{
+    const {email, password} = req.body
+
+    //Validações
+    if (!email) {
+        return res.status(422).send({ msg: 'Digite o Email !!' });
+    }
+    if (!password) {
+        return res.status(422).send({ msg: 'Digite Sua Senha !!' });
+    }
+
+    // Check if Login exists 
+    const logando = await Login.findOne({ email: email });
+    if (!logando) {
+        return res.status(404).send({ msg: 'Este email não esta registrado!!' });
+    }
+    // check se a Senha está correta
+    const checkPass = await bcrypt.compare(password, logando.password);
+
+    if(!checkPass){
+        return res.status(422).send({ msg: 'Senha Inválida!!' });
+    }
+    try {
+        const secret = process.env.SECRET
+
+        const token = jwt.sign({
+            id: logando._id
+        },
+        secret,
+        )
+        res.status(200).send({msg: 'Autenticação enviada com sucesso !!', token})
+
+    } catch (error) {
+        res.status(500).send({ msg: 'Não foi possivel no momento, tente mais tarde' });
+        console.log(error);
+    }
+
+
+});
 
 
 // Credenciais 
